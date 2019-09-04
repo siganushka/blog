@@ -2,38 +2,24 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\PostRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
     /**
      * @Route("/", name="app_index")
      */
-    public function index()
+    public function index(PostRepository $postRepository)
     {
-        return $this->render('index/index.html.twig', [
-            'controller_name' => 'IndexController',
-        ]);
-    }
+        $query = $postRepository->createQueryBuilder('p')
+            ->orderBy('p.createdAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
+            ->getQuery();
 
-    /**
-     * @Route("/foo", name="app_foo")
-     */
-    public function foo()
-    {
         return $this->render('index/index.html.twig', [
-            'controller_name' => 'foo',
-        ]);
-    }
-
-    /**
-     * @Route("/bar", name="app_bar")
-     */
-    public function bar()
-    {
-        return $this->render('index/index.html.twig', [
-            'controller_name' => 'bar',
+            'posts' => $query->getResult(),
         ]);
     }
 }

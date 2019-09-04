@@ -98,7 +98,7 @@ class GithubAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return $this->httpUtils->createRedirectResponse($request, 'app_login_oauth_github');
+        return $this->httpUtils->createRedirectResponse($request, 'app_login');
     }
 
     public function supportsRememberMe()

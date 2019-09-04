@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PostController!{% endblock %}
+
+{% block main %}
+<h1>{{ post.title }}</h1>
+<div class="markdown-body mt-3">
+  {{ post.content|md2html }}
+</div>
+{% endblock %}

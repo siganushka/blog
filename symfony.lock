@@ -20,6 +20,9 @@
     "doctrine/common": {
         "version": "v2.10.0"
     },
+    "doctrine/data-fixtures": {
+        "version": "v1.3.2"
+    },
     "doctrine/dbal": {
         "version": "v2.9.2"
     },
@@ -41,6 +44,18 @@
     "doctrine/doctrine-cache-bundle": {
         "version": "1.3.5"
     },
+    "doctrine/doctrine-fixtures-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "fc52d86631a6dfd9fdf3381d0b7e3df2069e51b3"
+        },
+        "files": [
+            "src/DataFixtures/AppFixtures.php"
+        ]
+    },
     "doctrine/event-manager": {
         "version": "v1.0.0"
     },
@@ -61,6 +76,9 @@
     },
     "doctrine/reflection": {
         "version": "v1.0.0"
+    },
+    "erusev/parsedown": {
+        "version": "1.7.3"
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
@@ -138,6 +156,9 @@
             ".env"
         ]
     },
+    "symfony/form": {
+        "version": "v4.3.4"
+    },
     "symfony/framework-bundle": {
         "version": "4.2",
         "recipe": {
@@ -172,6 +193,9 @@
     "symfony/inflector": {
         "version": "v4.3.4"
     },
+    "symfony/intl": {
+        "version": "v4.3.4"
+    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {
@@ -183,6 +207,12 @@
     },
     "symfony/mime": {
         "version": "v4.3.4"
+    },
+    "symfony/options-resolver": {
+        "version": "v4.3.4"
+    },
+    "symfony/polyfill-intl-icu": {
+        "version": "v1.12.0"
     },
     "symfony/polyfill-intl-idn": {
         "version": "v1.12.0"
