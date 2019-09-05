@@ -7,7 +7,6 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 Encore
   .setOutputPath('public/build/')
   .setPublicPath('/build')
-  .addEntry('app', ['./assets/js/app.js', './assets/scss/app.scss'])
   .enableSingleRuntimeChunk()
   .cleanupOutputBeforeBuild()
   .enableBuildNotifications()
@@ -31,5 +30,6 @@ Encore
       preset: ['default', { discardComments: { removeAll: true } }]
     }
   })
+  .addEntry('app', ['./assets/js/app.js', './assets/scss/app.scss'])
 
 module.exports = Encore.getWebpackConfig()
