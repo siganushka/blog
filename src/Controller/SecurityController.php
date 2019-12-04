@@ -4,11 +4,11 @@ namespace App\Controller;
 
 use App\OAuth\Github;
 use App\Security\GithubAuthenticator;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SecurityController extends AbstractController
 {
@@ -22,9 +22,6 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/login/oauth/github", name="app_login_oauth_github")
-     *
-     * @param Request $request
-     * @param Github  $client
      *
      * @return Response
      */

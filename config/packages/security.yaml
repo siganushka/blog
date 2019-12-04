@@ -2,12 +2,13 @@ security:
     providers:
         entity_provider:
             entity: { class: App\Entity\User, property: username }
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
+            anonymous: lazy
             guard:
                 authenticators:
                     - App\Security\GithubAuthenticator

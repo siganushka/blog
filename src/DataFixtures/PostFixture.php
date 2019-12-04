@@ -4,8 +4,8 @@ namespace App\DataFixtures;
 
 use App\Entity\Post;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class PostFixture extends Fixture implements DependentFixtureInterface
 {
