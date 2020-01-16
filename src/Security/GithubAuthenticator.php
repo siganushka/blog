@@ -46,17 +46,21 @@ class GithubAuthenticator extends AbstractGuardAuthenticator
             throw new CustomUserMessageAuthenticationException('Bad authentication state.');
         }
 
-        return $request->query->get('code');
+        $code = $request->query->get('code');
+
+        try {
+            return $token = $this->github->getAccessToken($code);
+        } catch (\Throwable $th) {
+            throw new CustomUserMessageAuthenticationException($th->getMessage());
+        }
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        $token = $this->github->getAccessToken($credentials);
-
         try {
-            $user = $this->github->getUser($token['access_token']);
+            $user = $this->github->getUser($credentials['access_token']);
         } catch (\Throwable $th) {
-            dd($th);
+            throw new CustomUserMessageAuthenticationException($th->getMessage());
         }
 
         try {
