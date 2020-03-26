@@ -19,6 +19,7 @@ class PostType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'label' => 'resource.post.title',
+                'attr' => ['autofocus' => 'autofocus'],
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'resource.post.content',

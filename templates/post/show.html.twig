@@ -7,20 +7,25 @@
 <article clas="post">
   <section class="post-header mb-3">
     <h1>{{ post.title }}</h1>
-    <h5 class="text-black-50">由 <a href="https://github.com/{{ post.user.username }}" target="_blank">{{ post.user.username }}</a> 发表于 <span title="{{ post.createdAt|date('Y/m/d H:i:s') }}">{{ post.createdAt|date('m/d H:i') }}</span></h5>
+    <h5 class="text-black-50">由 <a href="https://github.com/{{ post.user.username }}" target="_blank">{{ post.user.username }}</a> 发布于 <span title="{{ post.createdAt|date('Y/m/d H:i:s') }}">{{ post.createdAt|date('m/d H:i') }}</span></h5>
   </section>
   <section class="post-content markdown-body">
     {{ post.content|md2html }}
   </section>
 </article>
 
+<article class="alert alert-warning">
+  <small>该文章由由 <a href="https://github.com/{{ post.user.username }}" target="_blank">{{ post.user.username }}</a> 发布，转载请注明引用链接：</small>
+  <input type="text" class="form-control mt-1 mb-1" value="{{ url('app_post_show', {slug: post.slug}) }}" onclick="this.select()">
+</article>
+
 <article class="comments">
   <div class="comments-form">
     {% if is_granted('ROLE_READER') %}
-      <p>以 {{ block('current_username') }} 身份发表评论：</p>
-      {{ form(comment_form) }}
+    <p>以 {{ block('current_username') }} 身份发布评论：</p>
+    {{ form(comment_form) }}
     {% else %}
-      <p><a href="{{ path('app_login') }}">登录</a> 后发表评论！</p>
+    <p><a href="{{ path('app_login') }}">登录</a> 后发布评论！</p>
     {% endif %}
   </div>
 
@@ -29,7 +34,7 @@
     <li id="comments-{{ comment.id }}" class="media">
       <img src="{{ comment.user.avatar }}"  width="64px" class="border mr-3" alt="{{ comment.user.username }}">
       <div class="media-body">
-        <p class="mt-0 mb-1 text-black-50">由 <a href="https://github.com/{{ comment.user.username }}" target="_blank">{{ comment.user.username }}</a> 发表于 <span title="{{ comment.createdAt|date('Y/m/d H:i:s') }}">{{ comment.createdAt|date('m/d H:i') }}</span></p>
+        <p class="mt-0 mb-1 text-black-50">由 <a href="https://github.com/{{ comment.user.username }}" target="_blank">{{ comment.user.username }}</a> 发布于 <span title="{{ comment.createdAt|date('Y/m/d H:i:s') }}">{{ comment.createdAt|date('m/d H:i') }}</span></p>
         {{ comment.content|md2html }}
       </div>
     </li>

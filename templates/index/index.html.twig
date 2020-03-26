@@ -16,23 +16,24 @@
 
 <ul class="mt-3">
   {% for post in posts %}
-    <li>
-      <a href="{{ path('app_post_show', {slug: post.slug}) }}">{{ post.title }}</a>
+  <li>
+    <span class="text-black-50" title="{{ post.createdAt|date('Y/m/d H:i:s') }}">{{ post.createdAt|date('y/m/d') }}</span>
+    <a href="{{ path('app_post_show', {slug: post.slug}) }}" class="ml-2">{{ post.title }}</a>
 
-      {% if is_granted('POST_EDIT', post) %}
-      <a href="{{ path('app_post_edit', {slug: post.slug}) }}" class="text-black-50" title="修改">
-        <i class="far fa-edit"></i>
-      </a>
-      {% endif %}
+    {% if is_granted('POST_EDIT', post) %}
+    <a href="{{ path('app_post_edit', {slug: post.slug}) }}" class="text-black-50 ml-2" title="修改">
+      <i class="far fa-edit"></i>
+    </a>
+    {% endif %}
 
-      {% if is_granted('POST_DELETE', post) %}
-      <a href="{{ path('app_post_delete', {slug: post.slug, token: csrf_token('delete')}) }}" class="text-black-50" title="删除">
-        <i class="fas fa-trash-alt"></i>
-      </a>
-      {% endif %}
-    </li>
+    {% if is_granted('POST_DELETE', post) %}
+    <a href="{{ path('app_post_delete', {slug: post.slug, token: csrf_token('delete')}) }}" class="text-black-50 ml-2" title="删除">
+      <i class="fas fa-trash-alt"></i>
+    </a>
+    {% endif %}
+  </li>
   {% else %}
-    <li>No items.</li>
+  <li>No items.</li>
   {% endfor %}
 </ul>
 {% endblock %}
