@@ -16,7 +16,7 @@ class SecurityController extends AbstractController
     use TargetPathTrait;
 
     /**
-     * @Route("/login", name="app_login")
+     * @Route("/login", name="app_login", methods={"GET"})
      */
     public function login(Request $request)
     {
@@ -28,7 +28,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/login/oauth/github", name="app_login_oauth_github")
+     * @Route("/login/oauth/github", name="app_login_oauth_github", methods={"GET"})
      *
      * @return Response
      */
@@ -46,7 +46,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="app_logout")
+     * @Route("/logout", name="app_logout", methods={"GET"})
      */
     public function logout()
     {

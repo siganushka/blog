@@ -20,7 +20,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/posts/new", name="app_post_new")
+     * @Route("/posts/new", name="app_post_new", methods={"GET", "POST"})
      */
     public function new(Request $request, UserInterface $user)
     {
@@ -45,7 +45,53 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/posts/show/{id}", name="app_post_show")
+     * @Route("/posts/edit/{id}", name="app_post_edit", methods={"GET", "POST"})
+     */
+    public function edit(Request $request, $id)
+    {
+        $entity = $this->postRepository->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException("Posts {$id} is not found.");
+        }
+
+        $form = $this->createForm('App\Form\PostType', $entity);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirectToRoute('app_index');
+        }
+
+        return $this->render('post/form.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/posts/delete/{id}", name="app_post_delete", methods={"GET"})
+     */
+    public function delete(Request $request, $id)
+    {
+        if (!$this->isCsrfTokenValid('delete', $request->query->get('token'))) {
+            $this->addFlash('danger', 'Invalid CSRF token.');
+
+            return $this->redirectToRoute('app_index');
+        }
+
+        $entity = $this->postRepository->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException("Posts {$id} is not found.");
+        }
+
+        $this->addFlash('success', '文章已删除成功！');
+
+        return $this->redirectToRoute('app_index');
+    }
+
+    /**
+     * @Route("/posts/{id}", name="app_post_show", methods={"GET"})
      */
     public function show(Request $request, $id)
     {
@@ -77,43 +123,5 @@ class PostController extends AbstractController
             'post' => $entity,
             'comment_form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/posts/edit/{id}", name="app_post_edit")
-     */
-    public function edit(Request $request, $id)
-    {
-        $entity = $this->postRepository->find($id);
-        if (!$entity) {
-            throw $this->createNotFoundException("Posts {$id} is not found.");
-        }
-
-        $form = $this->createForm('App\Form\PostType', $entity);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
-
-            return $this->redirectToRoute('app_index');
-        }
-
-        return $this->render('post/form.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/posts/delete/{id}", name="app_post_delete")
-     */
-    public function delete(Request $request, $id)
-    {
-        $entity = $this->postRepository->find($id);
-        if (!$entity) {
-            throw $this->createNotFoundException("Posts {$id} is not found.");
-        }
-
-        dd($entity);
     }
 }

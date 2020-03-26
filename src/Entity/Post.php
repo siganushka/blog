@@ -41,7 +41,7 @@ class Post implements UuidResourceInterface, TimestampableInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post", cascade={"persist", "remove"})
-     * @ORM\OrderBy({"id": "DESC", "createdAt": "DESC"})
+     * @ORM\OrderBy({"createdAt": "DESC", "id": "DESC"})
      */
     private $comments;
 
