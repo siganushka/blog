@@ -15,7 +15,6 @@ class UserFixtures extends Fixture
         $user->setUsername('acme_foo');
         $user->setNickname('AcmeFoo');
         $user->setAvatar('http://placehold.it/320x320');
-        $user->setCreatedAt(new \DateTimeImmutable());
 
         $manager->persist($user);
         $manager->flush();

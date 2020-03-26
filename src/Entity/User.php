@@ -5,18 +5,18 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Siganushka\GenericBundle\Model\ResourceInterface;
+use Siganushka\GenericBundle\Model\ResourceTrait;
 use Siganushka\GenericBundle\Model\TimestampableInterface;
 use Siganushka\GenericBundle\Model\TimestampableTrait;
-use Siganushka\GenericBundle\Model\UuidResourceInterface;
-use Siganushka\GenericBundle\Model\UuidResourceTrait;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements UuidResourceInterface, TimestampableInterface, UserInterface
+class User implements ResourceInterface, TimestampableInterface, UserInterface
 {
-    use UuidResourceTrait;
+    use ResourceTrait;
     use TimestampableTrait;
 
     /**

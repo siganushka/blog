@@ -7,7 +7,7 @@
 <article clas="post">
   <section class="post-header mb-3">
     <h1>{{ post.title }}</h1>
-    <h5 class="text-secondary">由 <a href="https://github.com/{{ post.user.username }}" target="_blank">{{ post.user.username }}</a> 发表于 <span title="{{ post.createdAt|date('Y/m/d H:i:s') }}">{{ post.createdAt|date('m/d H:i') }}</span></h5>
+    <h5 class="text-black-50">由 <a href="https://github.com/{{ post.user.username }}" target="_blank">{{ post.user.username }}</a> 发表于 <span title="{{ post.createdAt|date('Y/m/d H:i:s') }}">{{ post.createdAt|date('m/d H:i') }}</span></h5>
   </section>
   <section class="post-content markdown-body">
     {{ post.content|md2html }}
@@ -26,10 +26,10 @@
 
   <ul class="comments-list list-unstyled">
     {% for comment in post.comments %}
-    <li id="comments-{{ comment.id }}" class="media mb-3">
+    <li id="comments-{{ comment.id }}" class="media">
       <img src="{{ comment.user.avatar }}"  width="64px" class="border mr-3" alt="{{ comment.user.username }}">
       <div class="media-body">
-        <p class="mt-0 mb-1 text-secondary">由 <a href="https://github.com/{{ comment.user.username }}" target="_blank">{{ comment.user.username }}</a> 发表于 <span title="{{ comment.createdAt|date('Y/m/d H:i:s') }}">{{ comment.createdAt|date('m/d H:i') }}</span></p>
+        <p class="mt-0 mb-1 text-black-50">由 <a href="https://github.com/{{ comment.user.username }}" target="_blank">{{ comment.user.username }}</a> 发表于 <span title="{{ comment.createdAt|date('Y/m/d H:i:s') }}">{{ comment.createdAt|date('m/d H:i') }}</span></p>
         {{ comment.content|md2html }}
       </div>
     </li>

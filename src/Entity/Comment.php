@@ -3,23 +3,23 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Siganushka\GenericBundle\Model\ResourceInterface;
+use Siganushka\GenericBundle\Model\ResourceTrait;
 use Siganushka\GenericBundle\Model\TimestampableInterface;
 use Siganushka\GenericBundle\Model\TimestampableTrait;
-use Siganushka\GenericBundle\Model\UuidResourceInterface;
-use Siganushka\GenericBundle\Model\UuidResourceTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
  */
-class Comment implements UuidResourceInterface, TimestampableInterface
+class Comment implements ResourceInterface, TimestampableInterface
 {
+    use ResourceTrait;
+    use TimestampableTrait;
+
     const STATE_PENDING = 'pending';
     const STATE_APPROVED = 'approved';
     const STATE_UNAPPROVED = 'unapproved';
-
-    use UuidResourceTrait;
-    use TimestampableTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")

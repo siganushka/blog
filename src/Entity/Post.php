@@ -5,24 +5,29 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Siganushka\GenericBundle\Model\ResourceInterface;
+use Siganushka\GenericBundle\Model\ResourceTrait;
 use Siganushka\GenericBundle\Model\TimestampableInterface;
 use Siganushka\GenericBundle\Model\TimestampableTrait;
-use Siganushka\GenericBundle\Model\UuidResourceInterface;
-use Siganushka\GenericBundle\Model\UuidResourceTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  */
-class Post implements UuidResourceInterface, TimestampableInterface
+class Post implements ResourceInterface, TimestampableInterface
 {
-    use UuidResourceTrait;
+    use ResourceTrait;
     use TimestampableTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="string", length=16, unique=true, options={"fixed" = true})
+     */
+    private $slug;
 
     /**
      * @ORM\Column(type="string")
@@ -58,6 +63,18 @@ class Post implements UuidResourceInterface, TimestampableInterface
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

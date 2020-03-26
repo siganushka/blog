@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Post;
+use App\Event\PostPreCreatedEvent;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class PostController extends AbstractController
 {
@@ -22,7 +24,7 @@ class PostController extends AbstractController
     /**
      * @Route("/posts/new", name="app_post_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, UserInterface $user)
+    public function new(Request $request, EventDispatcherInterface $dispatcher, UserInterface $user)
     {
         $entity = new Post();
         $entity->setUser($user);
@@ -32,6 +34,9 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $event = new PostPreCreatedEvent($entity);
+            $dispatcher->dispatch($event);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -45,13 +50,13 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/posts/edit/{id}", name="app_post_edit", methods={"GET", "POST"})
+     * @Route("/posts/edit/{slug}", name="app_post_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, $id)
+    public function edit(Request $request, $slug)
     {
-        $entity = $this->postRepository->find($id);
+        $entity = $this->postRepository->findOneBySlug($slug);
         if (!$entity) {
-            throw $this->createNotFoundException("Posts {$id} is not found.");
+            throw $this->createNotFoundException("Posts {$slug} is not found.");
         }
 
         $form = $this->createForm('App\Form\PostType', $entity);
@@ -70,9 +75,9 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/posts/delete/{id}", name="app_post_delete", methods={"GET"})
+     * @Route("/posts/delete/{slug}", name="app_post_delete", methods={"GET"})
      */
-    public function delete(Request $request, $id)
+    public function delete(Request $request, $slug)
     {
         if (!$this->isCsrfTokenValid('delete', $request->query->get('token'))) {
             $this->addFlash('danger', 'Invalid CSRF token.');
@@ -80,9 +85,9 @@ class PostController extends AbstractController
             return $this->redirectToRoute('app_index');
         }
 
-        $entity = $this->postRepository->find($id);
+        $entity = $this->postRepository->findOneBySlug($slug);
         if (!$entity) {
-            throw $this->createNotFoundException("Posts {$id} is not found.");
+            throw $this->createNotFoundException("Posts {$slug} is not found.");
         }
 
         $this->addFlash('success', '文章已删除成功！');
@@ -91,13 +96,13 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/posts/{id}", name="app_post_show", methods={"GET"})
+     * @Route("/posts/{slug}", name="app_post_show", methods={"GET", "POST"})
      */
-    public function show(Request $request, $id)
+    public function show(Request $request, $slug)
     {
-        $entity = $this->postRepository->find($id);
+        $entity = $this->postRepository->findOneBySlug($slug);
         if (!$entity) {
-            throw $this->createNotFoundException("Posts {$id} is not found.");
+            throw $this->createNotFoundException("Posts {$slug} is not found.");
         }
 
         $comment = new Comment();
@@ -116,7 +121,7 @@ class PostController extends AbstractController
 
             $fragment = sprintf('comments-%d', $comment->getId());
 
-            return $this->redirectToRoute('app_post_show', ['id' => $id, '_fragment' => $fragment]);
+            return $this->redirectToRoute('app_post_show', ['slug' => $slug, '_fragment' => $fragment]);
         }
 
         return $this->render('post/show.html.twig', [

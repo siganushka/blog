@@ -1,4 +1,5 @@
 @import "~bootstrap/scss/bootstrap";
+@import "~@fortawesome/fontawesome-free/css/all.css";
 @import 'highlight.js/scss/monokai-sublime.scss';
 
 body { font-size: $font-size-lg; background-color: #f9f9f7; }
@@ -11,34 +12,34 @@ body { font-size: $font-size-lg; background-color: #f9f9f7; }
 .markdown-body h6{ margin-bottom: $spacer; }
 
 .markdown-body table {
-    width: 100%;
-    margin-bottom: $spacer;
-    color: $table-color;
+  width: 100%;
+  margin-bottom: $spacer;
+  color: $table-color;
+  border: $table-border-width solid $table-border-color;
+  background-color: $table-bg;
+
+  th,
+  td {
+    padding: $table-cell-padding;
+    vertical-align: top;
     border: $table-border-width solid $table-border-color;
-    background-color: $table-bg;
-  
+  }
+
+  thead th {
+    vertical-align: bottom;
+    border-bottom: (2 * $table-border-width) solid $table-border-color;
+  }
+
+  thead {
     th,
     td {
-      padding: $table-cell-padding;
-      vertical-align: top;
-      border: $table-border-width solid $table-border-color;
+      border-bottom-width: 2 * $table-border-width;
     }
-  
-    thead th {
-      vertical-align: bottom;
-      border-bottom: (2 * $table-border-width) solid $table-border-color;
-    }
+  }
 
-    thead {
-        th,
-        td {
-          border-bottom-width: 2 * $table-border-width;
-        }
-      }
-  
-    tbody + tbody {
-      border-top: (2 * $table-border-width) solid $table-border-color;
-    }
+  tbody + tbody {
+    border-top: (2 * $table-border-width) solid $table-border-color;
+  }
 }
 
 .hljs { padding: $spacer; }
