@@ -5,62 +5,66 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Siganushka\GenericBundle\Model\TimestampableInterface;
+use Siganushka\GenericBundle\Model\TimestampableTrait;
+use Siganushka\GenericBundle\Model\UuidResourceInterface;
+use Siganushka\GenericBundle\Model\UuidResourceTrait;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements UserInterface
+class User implements UuidResourceInterface, TimestampableInterface, UserInterface
 {
-    const ROLE_ADMIN = 'ROLE_ADMIN';
-    const ROLE_WRITER = 'ROLE_WRITER';
-    const ROLE_READER = 'ROLE_READER';
+    use UuidResourceTrait;
+    use TimestampableTrait;
 
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\Column(type="guid")
+     * @ORM\Column(type="json")
      */
-    private $id;
+    private $roles = [];
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", unique=true)
      */
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
      */
     private $nickname;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
      */
     private $avatar;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updatedAt;
-
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user", cascade={"persist", "remove"})
      */
     private $posts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $comments;
 
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
-    public function getId(): ?string
+    public function setRoles(array $roles): self
     {
-        return $this->id;
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getRoles()
+    {
+        return $this->roles;
     }
 
     public function getUsername(): ?string
@@ -99,50 +103,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getRoles()
-    {
-        return ['ROLE_USER'];
-    }
-
-    public function getPassword()
-    {
-    }
-
-    public function getSalt()
-    {
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    /**
-     * @return Collection|Post[]
-     */
     public function getPosts(): Collection
     {
         return $this->posts;
@@ -169,5 +129,45 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPassword()
+    {
+    }
+
+    public function getSalt()
+    {
+    }
+
+    public function eraseCredentials()
+    {
     }
 }

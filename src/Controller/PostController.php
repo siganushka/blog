@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Post;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,7 +29,6 @@ class PostController extends AbstractController
         $entity->setCreatedAt(new \DateTimeImmutable());
 
         $form = $this->createForm('App\Form\PostType', $entity);
-        $form->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -47,15 +47,35 @@ class PostController extends AbstractController
     /**
      * @Route("/posts/show/{id}", name="app_post_show")
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $entity = $this->postRepository->find($id);
         if (!$entity) {
             throw $this->createNotFoundException("Posts {$id} is not found.");
         }
 
+        $comment = new Comment();
+        $comment->setUser($this->getUser());
+        $comment->setState(Comment::STATE_APPROVED);
+
+        $form = $this->createForm('App\Form\CommentType', $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->denyAccessUnlessGranted('ROLE_READER');
+
+            $entity->addComment($comment);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            $fragment = sprintf('comments-%d', $comment->getId());
+
+            return $this->redirectToRoute('app_post_show', ['id' => $id, '_fragment' => $fragment]);
+        }
+
         return $this->render('post/show.html.twig', [
             'post' => $entity,
+            'comment_form' => $form->createView(),
         ]);
     }
 
@@ -70,7 +90,6 @@ class PostController extends AbstractController
         }
 
         $form = $this->createForm('App\Form\PostType', $entity);
-        $form->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

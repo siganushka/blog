@@ -11,6 +11,7 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $user = new User();
+        $user->setRoles(['ROLE_ADMIN']);
         $user->setUsername('acme_foo');
         $user->setNickname('AcmeFoo');
         $user->setAvatar('http://placehold.it/320x320');

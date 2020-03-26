@@ -3,16 +3,18 @@
 {% block title %}Hello IndexController!{% endblock %}
 
 {% block main %}
-<div class="mt-3">
-  <a href="{{ path('app_post_new') }}">New Posts</a>
-</div>
-
 <ul class="mt-3">
   {% for post in posts %}
     <li>
       <a href="{{ path('app_post_show', {id: post.id}) }}">{{ post.title }}</a>
+
+      {% if is_granted('POST_EDIT', post) %}
       <a href="{{ path('app_post_edit', {id: post.id}) }}" class="text-info">修改</a>
+      {% endif %}
+
+      {% if is_granted('POST_DELETE', post) %}
       <a href="{{ path('app_post_delete', {id: post.id}) }}" class="text-danger">删除</a>
+      {% endif %}
     </li>
   {% else %}
     <li>No items.</li>

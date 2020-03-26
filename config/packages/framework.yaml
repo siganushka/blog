@@ -14,3 +14,6 @@ framework:
     #fragments: true
     php_errors:
         log: true
+
+siganushka_generic:
+    table_prefix: tb_

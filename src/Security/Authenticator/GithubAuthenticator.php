@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security;
+namespace App\Security\Authenticator;
 
 use App\Entity\User;
 use App\OAuth\Github;
@@ -67,6 +67,7 @@ class GithubAuthenticator extends AbstractGuardAuthenticator
             $entity = $userProvider->loadUserByUsername($user['login']);
         } catch (UsernameNotFoundException $e) {
             $entity = new User();
+            $entity->setRoles(['ROLE_READER']);
             $entity->setUsername($user['login']);
             $entity->setNickname($user['name']);
             $entity->setAvatar($user['avatar_url']);

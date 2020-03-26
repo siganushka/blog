@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="zh-CN" target-language="zh-CN" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="EVA0YaO" resname="resource.post.submit_create">
+        <source>resource.post.submit_create</source>
+        <target>立即发布</target>
+      </trans-unit>
+      <trans-unit id="MLNzF9v" resname="resource.post.submit_update">
+        <source>resource.post.submit_update</source>
+        <target>保存修改</target>
+      </trans-unit>
+      <trans-unit id="ZzxcFj4" resname="resource.post.title">
+        <source>resource.post.title</source>
+        <target>文章标题</target>
+      </trans-unit>
+      <trans-unit id="qUqND5H" resname="resource.post.content">
+        <source>resource.post.content</source>
+        <target>文章内容</target>
+      </trans-unit>
+      <trans-unit id="e5x12At" resname="resource.comment.submit">
+        <source>resource.comment.submit</source>
+        <target>发布评论</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

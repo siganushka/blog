@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>{% block title %}Welcome!{% endblock %}</title>
 {% block stylesheets %}
-{{ encore_entry_link_tags('app') }}
+{{ encore_entry_link_tags('vendor') }}
 {% endblock %}
 </head>
 <body>
@@ -13,14 +13,25 @@
   <header class="border-bottom my-3 py-3">
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="col-6 pt-1">
-        <a class="text-muted" href="{{ path('app_index') }}">Siganushka's blog</a>
+        <a class="text-muted" href="{{ path('app_index') }}">
+        {% block app_name %}Siganushka's Blog{% endblock %}
+        </a>
       </div>
       <div class="col-6 d-flex justify-content-end align-items-center">
-        {% if is_granted('ROLE_USER') %}
-          <img src="{{ app.user.avatar }}" class="border rounded-circle" width="32px">
-          <small>{{ app.user.username }} [<a href="{{ logout_path() }}">logout</a>]</small>
+        {% if is_granted('ROLE_WRITER') %}
+        <a href="{{ path('app_post_new') }}" class="btn btn-success mr-3">写文章</a>
+        {% endif %}
+        
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          <img src="{{ app.user.avatar }}" class="border rounded-circle mr-2" width="32px">
+          <small>
+            {% block current_username %}
+            <a href="https://github.com/{{ app.user.username }}" target="_blank">{{ app.user.username }}</a>
+            {% endblock %}
+            <a href="{{ logout_path() }}">退出</a>
+          </small>
         {% else %}
-          <a href="{{ path('app_login') }}">Login</a>
+          <a href="{{ path('app_login') }}">登录</a>
         {% endif %}
       </div>
     </div>
@@ -29,7 +40,7 @@
 </div>
 {% endblock %}
 {% block javascripts %}
-{{ encore_entry_script_tags('app') }}
+{{ encore_entry_script_tags('vendor') }}
 {% endblock %}
 </body>
 </html>

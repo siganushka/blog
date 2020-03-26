@@ -3,8 +3,37 @@
 {% block title %}Hello PostController!{% endblock %}
 
 {% block main %}
-<h1>{{ post.title }}</h1>
-<div class="markdown-body mt-3">
-  {{ post.content|md2html }}
-</div>
+
+<article clas="post">
+  <section class="post-header mb-3">
+    <h1>{{ post.title }}</h1>
+    <h5 class="text-secondary">由 <a href="https://github.com/{{ post.user.username }}" target="_blank">{{ post.user.username }}</a> 发布于 <span title="{{ post.createdAt|date('Y/m/d H:i:s') }}">{{ post.createdAt|date('m/d H:i') }}</span></h5>
+  </section>
+  <section class="post-content markdown-body">
+    {{ post.content|md2html }}
+  </section>
+</article>
+
+<article class="comments">
+  <div class="comments-form">
+    {% if is_granted('ROLE_READER') %}
+      <p>以 {{ block('current_username') }} 身份发表评论：</p>
+      {{ form(comment_form) }}
+    {% else %}
+      <p><a href="{{ path('app_login') }}">登录</a> 后发表评论！</p>
+    {% endif %}
+  </div>
+
+  <ul class="comments-list list-unstyled">
+    {% for comment in post.comments %}
+    <li id="comments-{{ comment.id }}" class="media mb-3">
+      <img src="{{ comment.user.avatar }}"  width="64px" class="mr-3" alt="{{ comment.user.username }}">
+      <div class="media-body">
+        <p class="mt-0 mb-1 text-secondary">由 <a href="https://github.com/{{ comment.user.username }}" target="_blank">{{ comment.user.username }}</a> 发布于 <span title="{{ comment.createdAt|date('Y/m/d H:i:s') }}">{{ comment.createdAt|date('m/d H:i') }}</span></p>
+        {{ comment.content|md2html }}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</article>
 {% endblock %}

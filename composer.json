@@ -2,27 +2,30 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/orm": "^2.7",
         "erusev/parsedown": "^1.7",
-        "symfony/console": "4.4.*",
-        "symfony/dotenv": "4.4.*",
-        "symfony/flex": "^1.5",
-        "symfony/form": "4.4.*",
-        "symfony/framework-bundle": "4.4.*",
-        "symfony/http-client": "4.4.*",
-        "symfony/security-bundle": "4.4.*",
-        "symfony/validator": "4.4.*",
+        "siganushka/generic-bundle": "dev-master",
+        "symfony/console": "5.0.*",
+        "symfony/dotenv": "5.0.*",
+        "symfony/flex": "^1.3.1",
+        "symfony/form": "5.0.*",
+        "symfony/framework-bundle": "5.0.*",
+        "symfony/http-client": "5.0.*",
+        "symfony/security-bundle": "5.0.*",
+        "symfony/serializer": "5.0.*",
+        "symfony/translation": "5.0.*",
+        "symfony/validator": "5.0.*",
         "symfony/webpack-encore-bundle": "^1.7",
-        "symfony/yaml": "4.4.*"
+        "symfony/yaml": "5.0.*"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "symfony/maker-bundle": "^1.14",
-        "symfony/web-profiler-bundle": "4.4.*"
+        "symfony/web-profiler-bundle": "5.0.*"
     },
     "config": {
         "preferred-install": {
@@ -44,6 +47,7 @@
         "paragonie/random_compat": "2.*",
         "symfony/polyfill-ctype": "*",
         "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php72": "*",
         "symfony/polyfill-php71": "*",
         "symfony/polyfill-php70": "*",
         "symfony/polyfill-php56": "*"
@@ -66,13 +70,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "4.4.*"
-        }
-    },
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://php.cnpkg.org"
+            "require": "5.0.*"
         }
     }
 }
