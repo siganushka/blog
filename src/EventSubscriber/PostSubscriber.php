@@ -7,6 +7,13 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class PostSubscriber implements EventSubscriberInterface
 {
+    public static function getSubscribedEvents()
+    {
+        return [
+            PostPreCreatedEvent::class => 'onPostPreCreatedEvent',
+        ];
+    }
+
     public function onPostPreCreatedEvent(PostPreCreatedEvent $event)
     {
         $slug = base64_encode(random_bytes(32));
@@ -14,12 +21,5 @@ class PostSubscriber implements EventSubscriberInterface
 
         $post = $event->getPost();
         $post->setSlug($slug);
-    }
-
-    public static function getSubscribedEvents()
-    {
-        return [
-            PostPreCreatedEvent::class => 'onPostPreCreatedEvent',
-        ];
     }
 }

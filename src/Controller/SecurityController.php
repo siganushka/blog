@@ -16,24 +16,17 @@ class SecurityController extends AbstractController
     use TargetPathTrait;
 
     /**
-     * @Route("/login", name="app_login", methods={"GET"})
-     */
-    public function login(Request $request)
-    {
-        if (null !== $referer = $request->headers->get('referer')) {
-            $this->saveTargetPath($request->getSession(), 'main', $referer);
-        }
-
-        return $this->render('security/login.html.twig');
-    }
-
-    /**
      * @Route("/login/oauth/github", name="app_login_oauth_github", methods={"GET"})
      *
      * @return Response
      */
     public function loginWithGithub(Request $request, Github $client)
     {
+        // target pth to session
+        if (null !== $referer = $request->headers->get('referer')) {
+            $this->saveTargetPath($request->getSession(), 'main', $referer);
+        }
+
         $state = bin2hex(random_bytes(8));
 
         $session = $request->getSession();

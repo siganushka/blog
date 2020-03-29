@@ -35,7 +35,7 @@ class Comment implements ResourceInterface, TimestampableInterface
      * @ORM\Column(type="text")
      *
      * @Assert\NotBlank()
-     * @Assert\Length(min=16)
+     * @Assert\Length(min=8)
      */
     private $content;
 

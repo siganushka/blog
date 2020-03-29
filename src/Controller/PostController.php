@@ -59,6 +59,9 @@ class PostController extends AbstractController
             throw $this->createNotFoundException("Posts {$slug} is not found.");
         }
 
+        // Deny access if not authors
+        $this->denyAccessUnlessGranted('POST_EDIT', $entity);
+
         $form = $this->createForm('App\Form\PostType', $entity);
         $form->handleRequest($request);
 
@@ -90,6 +93,9 @@ class PostController extends AbstractController
             throw $this->createNotFoundException("Posts {$slug} is not found.");
         }
 
+        // Deny access if not authors
+        $this->denyAccessUnlessGranted('POST_DELETE', $entity);
+
         $this->addFlash('success', '文章已删除成功！');
 
         return $this->redirectToRoute('app_index');
@@ -105,11 +111,16 @@ class PostController extends AbstractController
             throw $this->createNotFoundException("Posts {$slug} is not found.");
         }
 
+        $options = [
+            'action' => $this->generateUrl('app_post_show', ['slug' => $slug, '_fragment' => 'comments']),
+            'method' => 'POST',
+        ];
+
         $comment = new Comment();
         $comment->setUser($this->getUser());
         $comment->setState(Comment::STATE_APPROVED);
 
-        $form = $this->createForm('App\Form\CommentType', $comment);
+        $form = $this->createForm('App\Form\CommentType', $comment, $options);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -119,14 +130,12 @@ class PostController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
-            $fragment = sprintf('comments-%d', $comment->getId());
-
-            return $this->redirectToRoute('app_post_show', ['slug' => $slug, '_fragment' => $fragment]);
+            return $this->redirect($options['action']);
         }
 
         return $this->render('post/show.html.twig', [
             'post' => $entity,
-            'comment_form' => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 }

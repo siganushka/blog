@@ -35,6 +35,11 @@ class User implements ResourceInterface, TimestampableInterface, UserInterface
     private $nickname;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $url;
+
+    /**
      * @ORM\Column(type="string")
      */
     private $avatar;
@@ -87,6 +92,18 @@ class User implements ResourceInterface, TimestampableInterface, UserInterface
     public function setNickname(string $nickname): self
     {
         $this->nickname = $nickname;
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(?string $url): self
+    {
+        $this->url = $url;
 
         return $this;
     }

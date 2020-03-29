@@ -7,6 +7,7 @@ use App\OAuth\Github;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -46,10 +47,8 @@ class GithubAuthenticator extends AbstractGuardAuthenticator
             throw new CustomUserMessageAuthenticationException('Bad authentication state.');
         }
 
-        $code = $request->query->get('code');
-
         try {
-            return $token = $this->github->getAccessToken($code);
+            return $this->github->getAccessToken($request->query->get('code'));
         } catch (\Throwable $th) {
             throw new CustomUserMessageAuthenticationException($th->getMessage());
         }
@@ -58,19 +57,20 @@ class GithubAuthenticator extends AbstractGuardAuthenticator
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         try {
-            $user = $this->github->getUser($credentials['access_token']);
+            $data = $this->github->getUser($credentials['access_token']);
         } catch (\Throwable $th) {
             throw new CustomUserMessageAuthenticationException($th->getMessage());
         }
 
         try {
-            $entity = $userProvider->loadUserByUsername($user['login']);
+            $entity = $userProvider->loadUserByUsername($data['login']);
         } catch (UsernameNotFoundException $e) {
             $entity = new User();
             $entity->setRoles(['ROLE_READER']);
-            $entity->setUsername($user['login']);
-            $entity->setNickname($user['name']);
-            $entity->setAvatar($user['avatar_url']);
+            $entity->setUsername($data['login']);
+            $entity->setNickname($data['name']);
+            $entity->setUrl($data['html_url']);
+            $entity->setAvatar($data['avatar_url']);
             $entity->setCreatedAt(new \DateTimeImmutable());
 
             $this->entityManager->persist($entity);
@@ -87,7 +87,7 @@ class GithubAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        throw new \RuntimeException($exception->getMessage());
+        throw $exception;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
@@ -103,7 +103,11 @@ class GithubAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return $this->httpUtils->createRedirectResponse($request, 'app_login');
+        if (null === $authException) {
+            $authException = new AccessDeniedException();
+        }
+
+        throw $authException;
     }
 
     public function supportsRememberMe()

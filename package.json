@@ -1,6 +1,7 @@
 {
     "devDependencies": {
         "@symfony/webpack-encore": "^0.28.3",
+        "autosize": "^4.0.2",
         "bootstrap": "^4.4.1",
         "core-js": "^3.0.0",
         "highlight.js": "^9.18.1",

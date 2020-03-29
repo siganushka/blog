@@ -16,7 +16,7 @@ class CommentType extends AbstractType
         $builder
             ->add('content', TextareaType::class, [
                 'label' => false,
-                'attr' => ['rows' => 5],
+                'attr' => ['rows' => 3],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'resource.comment.submit',

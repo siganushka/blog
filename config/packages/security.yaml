@@ -18,3 +18,4 @@ security:
                     - App\Security\Authenticator\GithubAuthenticator
             logout:
                 path: app_logout
+                success_handler: App\Security\Http\Logout\RefererLogoutSuccessHandler

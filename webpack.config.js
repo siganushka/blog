@@ -64,7 +64,7 @@ Encore
   //.enableIntegrityHashes(Encore.isProduction())
 
   // uncomment if you're having problems with a jQuery plugin
-  //.autoProvidejQuery()
+  .autoProvidejQuery()
 
   // uncomment if you use API Platform Admin (composer req api-admin)
   //.enableReactPreset()
@@ -81,6 +81,10 @@ Encore
     options.cssProcessorPluginOptions = {
       preset: ['default', { discardComments: { removeAll: true } }]
     }
+  })
+  .copyFiles({
+    from: './assets/img',
+    to: 'images/[path][name].[hash:8].[ext]'
   })
   .addEntry('vendor', ['./assets/js/vendor.js', './assets/scss/vendor.scss'])
 ;
