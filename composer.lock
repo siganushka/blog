@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "28ac50693317dd1996de63854d360275",
+    "content-hash": "1009b0e7a15a278b3e2094a48840b32b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -3694,6 +3694,79 @@
             "time": "2020-05-12T16:47:27+00:00"
         },
         {
+            "name": "symfony/polyfill-uuid",
+            "version": "v1.17.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-uuid.git",
+                "reference": "6dbf0269e8aeab8253a5059c51c1760fb4034e87"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-uuid/zipball/6dbf0269e8aeab8253a5059c51c1760fb4034e87",
+                "reference": "6dbf0269e8aeab8253a5059c51c1760fb4034e87",
+                "shasum": ""
+            },
+            "require": {
+                "paragonie/random_compat": "~1.0|~2.0|~9.99",
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-uuid": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.17-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Uuid\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Pineau",
+                    "email": "lyrixx@lyrixx.info"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for uuid functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "uuid"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-05-12T16:47:27+00:00"
+        },
+        {
             "name": "symfony/property-access",
             "version": "v5.0.8",
             "source": {
@@ -4569,6 +4642,78 @@
                 "standards"
             ],
             "time": "2019-11-18T17:27:11+00:00"
+        },
+        {
+            "name": "symfony/uid",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/uid.git",
+                "reference": "d854aaa945f6277673ef54a6b65ceb2ac6736a57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/uid/zipball/d854aaa945f6277673ef54a6b65ceb2ac6736a57",
+                "reference": "d854aaa945f6277673ef54a6b65ceb2ac6736a57",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2.5",
+                "symfony/polyfill-uuid": "^1.15"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Uid\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Pineau",
+                    "email": "lyrixx@lyrixx.info"
+                },
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Uid component",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "UID",
+                "uuid"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-03-31T18:10:27+00:00"
         },
         {
             "name": "symfony/validator",
@@ -5678,7 +5823,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "siganushka/generic-bundle": 20
+        "siganushka/generic-bundle": 20,
+        "symfony/uid": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

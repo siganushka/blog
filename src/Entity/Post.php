@@ -25,7 +25,7 @@ class Post implements ResourceInterface, TimestampableInterface
     private $user;
 
     /**
-     * @ORM\Column(type="string", length=16, unique=true, options={"fixed" = true})
+     * @ORM\Column(type="string", length=22, unique=true, options={"fixed" = true})
      */
     private $slug;
 

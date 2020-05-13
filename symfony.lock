@@ -245,6 +245,9 @@
     "symfony/polyfill-php73": {
         "version": "v1.14.0"
     },
+    "symfony/polyfill-uuid": {
+        "version": "v1.17.0"
+    },
     "symfony/property-access": {
         "version": "v5.0.5"
     },
@@ -324,6 +327,9 @@
             "config/packages/twig.yaml",
             "templates/base.html.twig"
         ]
+    },
+    "symfony/uid": {
+        "version": "5.1-dev"
     },
     "symfony/validator": {
         "version": "4.3",
