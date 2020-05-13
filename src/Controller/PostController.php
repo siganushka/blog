@@ -69,7 +69,7 @@ class PostController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
-            return $this->redirectToRoute('app_index');
+            return $this->redirectToRoute('app_post_show', ['slug' => $slug]);
         }
 
         return $this->render('post/form.html.twig', [

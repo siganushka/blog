@@ -11,7 +11,7 @@
     <a href="{{ path('app_post_show', {slug: post.slug}) }}" class="ml-2">{{ post.title }}</a>
 
     {% if is_granted('POST_EDIT', post) %}
-    <a href="{{ path('app_post_edit', {slug: post.slug}) }}" class="text-black-50 ml-2" title="修改">
+    <a href="{{ path('app_post_edit', {slug: post.slug}) }}" class="text-black-50 ml-2" title="编辑">
       <i class="far fa-edit"></i>
     </a>
     {% endif %}

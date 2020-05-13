@@ -9,16 +9,26 @@
 <article>
   <section class="post-header mb-3">
     <h1>{{ post.title }}</h1>
-    <h5 class="text-black-50">由 {{ linked_username(post.user) }} 发布于 {{ human_date(post.createdAt) }}</h5>
+    <p class="text-black-50">
+      <span>由 {{ linked_username(post.user) }} 发布于 {{ human_date(post.createdAt) }}</span>
+
+      {% if is_granted('POST_EDIT', post) %}
+      <a href="{{ path('app_post_edit', { slug: post.slug }) }}" class="text-black-50 ml-2" title="编辑"><i class="far fa-edit"></i></a>
+      {% endif %}
+
+      {% if is_granted('POST_DELETE', post) %}
+      <a href="{{ path('app_post_delete', { slug: post.slug, token: csrf_token('delete') }) }}" class="text-black-50 ml-2" title="删除"><i class="fas fa-trash-alt"></i></a>
+      {% endif %}
+    </p>
   </section>
   <section class="post-content markdown-body">
     {{ post.content|md2html }}
   </section>
 </article>
 
-<article class="alert alert-warning">
+<article class="alert alert-info">
   <small>该文章由由 {{ linked_username(post.user) }} 发布，转载请注明引用链接：</small>
-  <input type="text" class="form-control mt-1 mb-1" value="{{ url('app_post_show', {slug: post.slug}) }}" onclick="this.select()">
+  <input type="text" class="form-control mt-1 mb-1" value="{{ url('app_post_show', { slug: post.slug }) }}" onclick="this.select()">
 </article>
 
 <article id="comments">
@@ -42,6 +52,5 @@
     </li>
     {% endfor %}
   </ul>
-  
 </article>
 {% endblock %}
