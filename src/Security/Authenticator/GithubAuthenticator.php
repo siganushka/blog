@@ -21,7 +21,7 @@ class GithubAuthenticator extends AbstractGuardAuthenticator
 {
     use TargetPathTrait;
 
-    const STATE = '_state';
+    public const STATE = '_state';
 
     private $entityManager;
     private $httpUtils;

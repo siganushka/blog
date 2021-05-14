@@ -36,7 +36,7 @@ class PostType extends AbstractType
     public function onPreSetData(FormEvent $event)
     {
         $data = $event->getData();
-        $label = (!$data || $data->isNew())
+        $label = (null === $data || null === $data->getId())
             ? 'resource.post.submit_create'
             : 'resource.post.submit_update';
 

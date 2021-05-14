@@ -6,7 +6,7 @@ use App\Entity\Post;
 use App\Event\PostPreCreatedEvent;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class PostFixtures extends Fixture implements DependentFixtureInterface

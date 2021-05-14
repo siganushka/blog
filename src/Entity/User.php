@@ -5,10 +5,10 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Siganushka\GenericBundle\Model\ResourceInterface;
-use Siganushka\GenericBundle\Model\ResourceTrait;
-use Siganushka\GenericBundle\Model\TimestampableInterface;
-use Siganushka\GenericBundle\Model\TimestampableTrait;
+use Siganushka\GenericBundle\Entity\ResourceInterface;
+use Siganushka\GenericBundle\Entity\ResourceTrait;
+use Siganushka\GenericBundle\Entity\TimestampableInterface;
+use Siganushka\GenericBundle\Entity\TimestampableTrait;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**

@@ -76,7 +76,7 @@ Encore
       output: { comments: false }
     }
   })
-  .configureOptimizeCssPlugin((options) => {
+  .configureManifestPlugin((options) => {
     options.cssProcessor = require('cssnano')
     options.cssProcessorPluginOptions = {
       preset: ['default', { discardComments: { removeAll: true } }]

@@ -8,8 +8,9 @@ $finder = PhpCsFixer\Finder::create()
     ->in([__DIR__.'/src'])
 ;
 
-return PhpCsFixer\Config::create()
-    ->setRules(array(
+
+$config = new PhpCsFixer\Config();
+return $config->setRules(array(
         '@Symfony' => true,
         '@Symfony:risky' => true,
         '@PHPUnit75Migration:risky' => true,

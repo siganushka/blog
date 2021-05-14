@@ -6,9 +6,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class Github
 {
-    const AUTHORIZE_URL = 'https://github.com/login/oauth/authorize';
-    const ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token';
-    const USER_URL = 'https://api.github.com/user';
+    public const AUTHORIZE_URL = 'https://github.com/login/oauth/authorize';
+    public const ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token';
+    public const USER_URL = 'https://api.github.com/user';
 
     private $client;
     private $clientId;

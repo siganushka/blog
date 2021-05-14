@@ -34,6 +34,6 @@ class PostVoter extends Voter
             return true;
         }
 
-        return $user->isEqualTo($subject->getUser());
+        return $user->equals($subject->getUser());
     }
 }

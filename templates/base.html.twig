@@ -19,16 +19,16 @@
       </div>
       <div class="col-6 d-flex justify-content-end align-items-center">
         {% if is_granted('ROLE_WRITER') %}
-        <a href="{{ path('app_post_new') }}" class="btn btn-success mr-2" title="写文章">
+        <a href="{{ path('app_post_new') }}" class="btn btn-success me-2" title="写文章">
           <i class="fas fa-plus"></i>
         </a>
         {% endif %}
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <img src="{{ app.user.avatar }}" class="border rounded mr-2" width="38px" title="{{ app.user.username }}">
-        <small>{{ linked_username(app.user) }}<a href="{{ logout_path() }}" class="ml-2">退出</a></small>
+        <img src="{{ app.user.avatar }}" class="border rounded me-2" width="38px" title="{{ app.user.username }}">
+        <small>{{ linked_username(app.user) }}<a href="{{ logout_path() }}" class="ms-2">退出</a></small>
         {% else %}
-          <img src="{{ asset('build/images/oauth-github.png') }}"  class="border rounded-circle mr-2" />
+          <img src="{{ asset('build/images/oauth-github.png') }}"  class="border rounded-circle me-2" />
           <a href="{{ path('app_login_oauth_github') }}">Login with Github</a>
         {% endif %}
       </div>
